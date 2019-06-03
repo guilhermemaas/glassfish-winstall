@@ -11,5 +11,3 @@ def test_directory_exists(directory):
 def test_directory_empty(directory):
     empty = os.listdir(directory)
     assert empty == 0
-
-def test_link_glassfish4(link)
