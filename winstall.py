@@ -55,4 +55,4 @@ if directory_verify(directory) == False:
 else:
     print('Diretório já existe ou já possui dados.')
 
-print('Finalizado.')
+print('Finalizado!')
