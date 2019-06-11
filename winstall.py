@@ -2,6 +2,7 @@ import os
 import urllib.request
 import zipfile
 import subprocess
+from colorama import Fore, Style
 
 def directory_verify(directory):
     if os.path.isdir(directory):
@@ -29,14 +30,15 @@ url = 'http://download.oracle.com/glassfish/4.0/release/glassfish-4.0.zip'
 download_dir = f'{directory}\\download'
 descompact_file = f'{download_dir}\\glassfish-4.0.zip'
 bin_dir = f'{directory}\\glassfish4\\bin\\asadmin.bat'
+line = Fore.GREEN + '-' * 30
 
-print('---')
+print(line)
 print(f'Diretório de instalação: {directory}')
 print(f'URL de download: {url}')
 print(f'Diretório de download: {download_dir}')
 print(f'Caminho do arquivo a ser descompactado: {descompact_file}')
 print(f'Caminho do diretório bin: {bin_dir}')
-print('---' * 10)
+print(line)
 
 print('Verificando se diretório existe.' + '\n' + '---' * 10)
 if directory_verify(directory) == False:
