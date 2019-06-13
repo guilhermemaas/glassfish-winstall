@@ -58,3 +58,5 @@ else:
     print('Diretório já existe ou já possui dados.')
 
 print('Finalizado!')
+
+#https://gist.github.com/vladignatyev/06860ec2040cb497f0f3
