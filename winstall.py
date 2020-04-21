@@ -16,7 +16,7 @@ def install_ID() -> str:
     return  str(install_ID)
     
 
-def create_dir(path: str):
+def create_dir(path: str) -> bool:
     try:
         os.mkdir(path)
         return True
@@ -24,14 +24,14 @@ def create_dir(path: str):
         print('Problem with creating directory: ', str(err))
         
 
-def download_glassfish(path: str, url: str):
+def download_glassfish(path: str, url: str) -> None:
     try:
         urllib.request.urlretrieve(url, f'{path}\\glassfish-4.0.zip')
     except Exception as err:
         print('Problem with download Glassfish: ', str(err))
 
 
-def descompact_zip(file_path: str, dest_path: str):
+def descompact_zip(file_path: str, dest_path: str) -> None:
     zip_file = zipfile.ZipFile(f'{file_path}')
     try:
         zip_file.extractall(dest_path)
@@ -39,7 +39,7 @@ def descompact_zip(file_path: str, dest_path: str):
         print('Error unzipping Glassfish: ', str(err))
 
 
-def glassfish_create_service(asadmin_dir):
+def glassfish_create_service(asadmin_dir: str) -> None:
     try:
         subprocess.run([asadmin_dir, 'create-service --name domain1'], capture_output=True)
     except Excption as err:
