@@ -39,18 +39,17 @@ def descompact_zip(file_path: str, dest_path: str) -> None:
         print('Error unzipping Glassfish: ', str(err))
 
 
-def glassfish_create_service(asadmin_dir: str, service_name: str) -> None:
-    subprocess.run([asadmin_dir, service_name], capture_output=True)
+def glassfish_create_service(asadmin_dir: str, asadmin_params: str) -> None:
+    subprocess.call(rf'{asadmin_dir} {asadmin_params}', shell=True)
 
 
-#install_path = r'C:\\glassfish_1'
 install_ID = install_ID()
-service_name = f'create-service --name Glassfish Install ID {install_ID}'
+asadmin_params = f'create-service --name Glassfish_{install_ID}'
 install_path = f'C:\\glassfish{install_ID}'
 url = 'http://download.oracle.com/glassfish/4.0/release/glassfish-4.0.zip'
 download_dir = f'{install_path}\\download'
 descompact_file = f'{download_dir}\\glassfish-4.0.zip'
-bin_dir = f'{install_path}\\glassfish4\\bin\\asadmin.bat'
+asadmin_dir = f'{install_path}\\glassfish4\\bin\\asadmin.bat'
 line = '=' * 30
 
 print(line)
@@ -72,11 +71,10 @@ if os.path.isdir(install_path):
     descompact_zip(descompact_file, install_path)
     print(f'Zip descompactado: {descompact_file}...')
     print(f'Criando serviço do Windows: ')
-    print(f'Dir: {bin_dir}.')
-    print(bin_dir)
-    glassfish_create_service(bin_dir, service_name)
+    print(f'Dir: {asadmin_dir}.')
+    print(f'Params: {asadmin_params}')
+    print(f'Full Command: {asadmin_dir}{asadmin_params}')
+    glassfish_create_service(asadmin_dir, asadmin_params)
 else:
     print('Installation Error.')
 print('Fineshed!')
-
-#https://gist.github.com/vladignatyev/06860ec2040cb497f0f3
