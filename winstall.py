@@ -10,7 +10,7 @@ def random_int() -> int:
 
 
 def install_ID() -> str:
-    install_ID = install_ID()
+    install_ID = random_int()
     while os.path.isdir(f'C:\\glassish{install_ID}'):
         install_ID = install_ID()
     return  str(install_ID)
@@ -39,15 +39,13 @@ def descompact_zip(file_path: str, dest_path: str) -> None:
         print('Error unzipping Glassfish: ', str(err))
 
 
-def glassfish_create_service(asadmin_dir: str) -> None:
-    try:
-        subprocess.run([asadmin_dir, 'create-service --name domain1'], capture_output=True)
-    except Excption as err:
-        print('Error creating glassfish service: ', str(err))
+def glassfish_create_service(asadmin_dir: str, service_name: str) -> None:
+    subprocess.run([asadmin_dir, service_name], capture_output=True)
 
 
 #install_path = r'C:\\glassfish_1'
 install_ID = install_ID()
+service_name = f'create-service --name Glassfish Install ID {install_ID}'
 install_path = f'C:\\glassfish{install_ID}'
 url = 'http://download.oracle.com/glassfish/4.0/release/glassfish-4.0.zip'
 download_dir = f'{install_path}\\download'
@@ -68,12 +66,15 @@ if os.path.isdir(install_path):
     print(f'Diretório criado com sucesso:{install_path}...')
     create_dir(download_dir)
     print(f'Diretório para download criado: {download_dir}...')
-    download_glassfish4(download_dir, url)
-    print(f'Download realizado: {download_dir}...')
-    descompact_zip(descompact_file, directory)
+    print('Iniciando Download...')
+    download_glassfish(download_dir, url)
+    print(f'Download finalizado: {download_dir}...')
+    descompact_zip(descompact_file, install_path)
     print(f'Zip descompactado: {descompact_file}...')
     print(f'Criando serviço do Windows: ')
-    glassfish_create_service(bin_dir)
+    print(f'Dir: {bin_dir}.')
+    print(bin_dir)
+    glassfish_create_service(bin_dir, service_name)
 else:
     print('Installation Error.')
 print('Fineshed!')
