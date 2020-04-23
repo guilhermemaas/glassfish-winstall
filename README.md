@@ -30,11 +30,11 @@ _PT-BR:_
 - [ ] Permitir definir portas e configurações do domain.xml.
 - [ ] Criar um Executável para que não seja necessário baixar o Python.
 
-### Requirements:
+### Requirements / Requerimentos:
 1. Java 1.8 or 1.7.
 2. Python 3.7+.
 
-### How to use:
+### How to use / Como usar:
 1. Download file or clone repository / Baixe ou clone o repositório.
 2. Execute CMD with adminstrative previleges / Execute o CMD com previlégios de Administrador.
 3. Run in CMD: python winstall.py(Must be in the same directory as winstall.py) / Execute no CMD: python winstall.py(Precisa estar no mesmo diretório de winstall.py).
