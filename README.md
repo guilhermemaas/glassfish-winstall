@@ -3,9 +3,6 @@
 ### Objective/Objetivo:
 Automate the installation of GlassFish on a Windows computer / Automatizar a instalação do GlassFish em um computador com Windows.
 
-### Why? Por quê?
-In my previous job, every new employee I had to manually install on their PCs / Em meu emprego anterior, a cada novo colaborador eu tinha que instalar manualmente em seus PCs.
-
 ### Use example/Exemplo de uso:
 <img src="images/g4winstall.png"
      alt="Exemple"
@@ -41,3 +38,6 @@ _PT-BR:_
 1. Download file or clone repository / Baixe ou clone o repositório.
 2. Execute CMD with adminstrative previleges / Execute o CMD com previlégios de Administrador.
 3. Run in CMD: python winstall.py(Must be in the same directory as winstall.py) / Execute no CMD: python winstall.py(Precisa estar no mesmo diretório de winstall.py).
+
+### Why? Por quê?
+In my previous job, every new employee I had to manually install on their PCs / Em meu emprego anterior, a cada novo colaborador eu tinha que instalar manualmente em seus PCs.
