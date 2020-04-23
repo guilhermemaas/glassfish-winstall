@@ -9,7 +9,7 @@ Automate the installation of GlassFish on a Windows computer / Automatizar a ins
      style="float: left; margin-right: 10px;" />
 <br/>
 
-### Task Lists:
+### Tasks / Tarefas:
 _EN:_
 - [x] Install Glassfish4 with default settings.
 - [x] Check if the TCP ports are in use.
