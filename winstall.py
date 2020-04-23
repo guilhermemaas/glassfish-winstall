@@ -85,11 +85,12 @@ def glassfish_create_service(asadmin_dir: str, asadmin_params: str) -> None:
 
 def rename_windows_service_display(install_id: str) -> None:
     """Changes the name of the service displayed in services.msc."""
-    subprocess.call(f'sc config GlassFish_{install_id} DisplayName = "GlassFish ID_{install_ID}"', shell=True)
+    print(f'sc config GlassFish_{install_id} DisplayName = "GlassFish ID_{install_id}"')
+    subprocess.call(f'sc config GlassFish_{install_id} DisplayName= "GlassFish_ID_{install_id}"', shell=True)
 
 
 def print_line() -> str:
-    print('=' * 30)
+    print('=' * 100)
 
 
 #Preparing variables to install
@@ -100,6 +101,8 @@ url = 'http://download.oracle.com/glassfish/4.0/release/glassfish-4.0.zip'
 download_dir = f'{install_path}\\download'
 descompact_file = f'{download_dir}\\glassfish-4.0.zip'
 asadmin_dir = f'{install_path}\\glassfish4\\bin\\asadmin.bat'
+tcp_port = 4848
+ip = '127.0.0.1'
 print_g4wi()
 sleep(1)
 print_line()
@@ -112,38 +115,51 @@ sleep(1)
 print_line()
 
 #Runing functions:
-create_dir(install_path)
-if os.path.isdir(install_path) == True:
-    print('Checking if Java 1.8 or 1.7 is installed...')
-    if java_check():
-        print(f'Verifying if port 4848 is in use on 127.0.0.1/localhost...')
-        if tcp_port_check('127.0.0.1', 4848) == False:
-            print('TCP port is not in use... OK')
-            print('Java version... OK')
-            print(f'Directory created sucessfuly:{install_path}...')
-            print('Creating download directory...')
-            create_dir(download_dir)
-            print(f'Download directory created sucessfuly: {download_dir}...')
-            print('Starting GlassFish4 download...')
-            download_glassfish(download_dir, url)
-            print(f'Downloaded in: {download_dir}...\n Unpacking .zip...')
-            descompact_zip(descompact_file, install_path)
-            print(f'.zip unpacked: {descompact_file}...')
-            print(f'Creating Windows Service... ')
-            glassfish_create_service(asadmin_dir, asadmin_params)
-            print(f'Changing service name to GlassFish ID_{install_ID}.')
-            rename_windows_service_display(install_ID)
-            print(f'Removing download directory: {download_dir}.')
-            remove_dir(download_dir)
-            print_line()
-            print('GlassFish4 Installation Finished! :)')
+def main() -> None:
+    create_dir(install_path)
+    if os.path.isdir(install_path) == True:
+        print('Checking if Java 1.8 or 1.7 is installed...')
+        if java_check():
+            print(f'Verifying if port {tcp_port} is in use on {ip}...')
+            if tcp_port_check(ip, tcp_port) == False:
+                print('TCP port is not in use... OK')
+                print('Java version... OK')
+                print(f'Directory created sucessfuly:{install_path}...')
+                print('Creating download directory...')
+                create_dir(download_dir)
+                print(f'Download directory created sucessfuly: {download_dir}...')
+                print('Starting GlassFish4 download...')
+                download_glassfish(download_dir, url)
+                print(f'Downloaded in: {download_dir}...\n Unpacking .zip...')
+                descompact_zip(descompact_file, install_path)
+                print(f'.zip unpacked: {descompact_file}...')
+                print(f'Creating Windows Service... ')
+                glassfish_create_service(asadmin_dir, asadmin_params)
+                print(f'Changing service name to GlassFish ID_{install_ID}.')
+                rename_windows_service_display(install_ID)
+                print(f'Removing download directory: {download_dir}.')
+                remove_dir(download_dir)
+                print_line()
+                print(f"""
+                Finished! Glassfish4 is installed!
+                Installation information for deploy:
+                    - Glassfish Admin Port: {tcp_port}.
+                    - GlassFish HTTP Listner-1: 8080.
+                    - Glassfish HTTP Listner-2: 8181.
+                    - JVM Options:
+                        - XX:MaxPermaSize=192mb.
+                        - Xmx512mb.
+                """)
+            else:
+                print_line()
+                print(f'TCP port {tcp_port} is not avaible in {ip}. Verify if any program or older Glassfish is using.')
         else:
             print_line()
-            print('TCP port 4848 is not avaible. Verify if any program or older Glassfish is using.')
+            print('Java not installed correctly. Reinstall or check JAVA_HOME environment variable.')
     else:
         print_line()
-        print('Java not installed correctly. Reinstall or check JAVA_HOME environment variable.')
-else:
+        print('Installation Error.')
     print_line()
-    print('Installation Error.')
-print_line()
+
+if __name__ == "__main__":
+    main()
